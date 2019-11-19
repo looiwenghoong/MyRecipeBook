@@ -10,7 +10,7 @@
         android:id="@+id/NewRecipeHeader"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:background="#141D66"
+        android:background="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,7 +24,7 @@
             android:layout_marginBottom="24dp"
             android:gravity="center"
             android:text="New Recipe"
-            android:textColor="#FFFFFF"
+            android:textColor="#ffffff"
             android:textFontWeight="50"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
