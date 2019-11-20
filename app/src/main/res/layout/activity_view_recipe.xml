@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewRecipe">
+    tools:context=".ViewRecipe">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/NewRecipeHeader"
+        android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:background="@color/blue"
@@ -16,16 +16,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/NewRecipeHeaderText"
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
-            android:gravity="center"
-            android:text="New Recipe"
+            android:text="My Recipe Details"
             android:textColor="#ffffff"
-            android:textFontWeight="50"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,48 +36,35 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NewRecipeHeader">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <TextView
             android:id="@+id/RecipeTitleHeader"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:text="New Recipe Title"
-            android:textSize="25sp"
             android:gravity="center|left"
+            android:text="Recipe Title"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/RecipeTitleText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:ems="10"
-            android:hint="Enter Recipe Title"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/RecipeTitleHeader" />
 
         <TextView
             android:id="@+id/RecipeInstructionHeader"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:text="New Recipe Instruction"
-            android:textSize="25sp"
             android:gravity="center|left"
+            android:text="Recipe Instruction"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/RecipeTitleText" />
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <EditText
             android:id="@+id/RecipeInstructionEditText"
@@ -90,23 +75,45 @@
             android:layout_marginBottom="24dp"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Enter the Recipe instruction"
             android:inputType="textMultiLine"
-            app:layout_constraintBottom_toTopOf="@+id/AddNewRecipeBtn"
+            android:clickable="false"
+            android:focusable="false"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            app:layout_constraintBottom_toTopOf="@+id/RecipeRatingBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/RecipeInstructionHeader" />
 
-        <Button
-            android:id="@+id/AddNewRecipeBtn"
+        <TextView
+            android:id="@+id/textView7"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginEnd="48dp"
-            android:layout_marginBottom="24dp"
-            android:text="Add New Recipe"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="TextView"
+            android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/RecipeTitleHeader" />
+
+        <RatingBar
+            android:id="@+id/RecipeRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/RecipeDeleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:text="Delete Recipe"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

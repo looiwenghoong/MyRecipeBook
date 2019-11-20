@@ -9,11 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ViewRecipe"></activity>
+
         <provider
             android:name=".Provider.MyContentProvider"
             android:authorities="com.example.myrecipebook.MyContentProvider"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true" />
 
         <activity android:name=".NewRecipe" />
         <activity android:name=".MainActivity">

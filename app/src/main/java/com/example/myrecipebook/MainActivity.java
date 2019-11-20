@@ -10,17 +10,30 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String[] dropDown = {"Title", "Rating"};
     private Spinner dropDownSpinner;
     private Button addNewRecipeBtn;
+    private Button testBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupItems();
+
+        final Intent RecipeIntent = new Intent(this, ViewRecipe.class);
+        testBtn = findViewById(R.id.testBtn);
+        testBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+//                startActivity(RecipeIntent);
+            }
+        });
     }
 
     private void setupItems() {
@@ -51,5 +64,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(newRecipeIntent);
             }
         });
+    }
+
+    private void loadData() {
+        MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+        ArrayList<Recipe> recipe = dbHandler.allRecipe("Cake");
+        if(recipe != null) {
+            for(Recipe r: recipe) {
+                System.out.println(r.get_recipeRating());
+            }
+        } else {
+            System.out.println("No Match Found");
+        }
     }
 }

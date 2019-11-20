@@ -14,9 +14,9 @@ import com.example.myrecipebook.MyDBHandler;
 public class MyContentProvider extends ContentProvider {
 
     private MyDBHandler myDB;
-    private static final String AUTHORITY = "com.example.myrecipebook.provider.MyContentProvider";
+    private static final String AUTHORITY = "com.example.myrecipebook.MyContentProvider";
     private static final String Recipe_Table = "Recipes";
-    public static final Uri Content_URI = Uri.parse("content://" + AUTHORITY + Recipe_Table);
+    public static final Uri Content_URI = Uri.parse("content://" + AUTHORITY + "/" + Recipe_Table);
 
     public static final int RECIPE = 1;
     public static final int RECIPE_ID = 2;
