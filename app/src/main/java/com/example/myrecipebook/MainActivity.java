@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setupItems();
         recipeList = findViewById(R.id.recipeList);
 
 //        final Intent RecipeIntent = new Intent(this, ViewRecipe.class);
@@ -43,25 +42,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        allRecipe = loadData();
-        if(allRecipe != null) {
-            CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), allRecipe);
-            recipeList.setAdapter(customAdapter);
-            recipeList.setItemsCanFocus(true);
-
-            System.out.println(recipeList);
-
-            recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    System.out.println("123");
-                }
-            });
-        } else {
-            System.out.println("No Match Found");
-        }
-
+        System.out.println("Started");
+        setupItems();
     }
 
     private void setupItems() {
@@ -74,7 +56,35 @@ public class MainActivity extends AppCompatActivity {
         dropDownSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println(position);
+                if(position == 0) {
+                    System.out.println("Title Pressed");
+
+                    // Load data sorted with title
+                    allRecipe = loadData();
+
+                    // if the data array is not null then set adapter to view the data
+                    if(allRecipe != null) {
+                        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), allRecipe);
+                        recipeList.setAdapter(customAdapter);
+                        recipeList.setItemsCanFocus(true);
+
+                        recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                int _id = allRecipe.get(position).get_id();
+                                String _recipeTitle = allRecipe.get(position).get_recipeTitle();
+                                String _recipeInstruction = allRecipe.get(position).get_recipeInstruction();
+                                int _recipeRating = allRecipe.get(position).get_recipeRating();
+
+                                navigateToViewRecipe(_id, _recipeTitle, _recipeInstruction, _recipeRating);
+                            }
+                        });
+                    } else {
+                        System.out.println("No Match Found");
+                    }
+                } else {
+                    System.out.println("Rating Pressed");
+                }
             }
 
             @Override
@@ -98,5 +108,14 @@ public class MainActivity extends AppCompatActivity {
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
         ArrayList<Recipe> recipe = dbHandler.allRecipe("Cake");
         return recipe;
+    }
+
+    private void navigateToViewRecipe(int id, String title, String instruction, int rating) {
+        Intent viewRecipeIntent = new Intent(this, ViewRecipe.class);
+        viewRecipeIntent.putExtra("recipe_id", id);
+        viewRecipeIntent.putExtra("recipe_title", title);
+        viewRecipeIntent.putExtra("recipe_instruction", instruction);
+        viewRecipeIntent.putExtra("recipe_rating", rating);
+        startActivity(viewRecipeIntent);
     }
 }

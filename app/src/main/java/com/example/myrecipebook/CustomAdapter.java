@@ -43,7 +43,7 @@ public class CustomAdapter extends BaseAdapter {
         TextView listViewCell = convertView.findViewById(R.id.RecipeTitle);
         RatingBar ratingBar = convertView.findViewById(R.id.RatingBar);
         listViewCell.setText(recipeList.get(position).get_recipeTitle());
-        listViewCell.setTextSize(30);
+        listViewCell.setTextSize(25);
         ratingBar.setRating(recipeList.get(position).get_recipeRating());
         ratingBar.setIsIndicator(true);
         return convertView;

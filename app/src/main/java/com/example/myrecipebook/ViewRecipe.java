@@ -2,7 +2,9 @@ package com.example.myrecipebook;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -14,6 +16,8 @@ public class ViewRecipe extends AppCompatActivity {
     private EditText recipeInstruction;
     private RatingBar ratingBar;
     private Button deletebtn;
+    private int recipe_id, recipe_rating;
+    private String recipe_title, recipe_instruction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +29,26 @@ public class ViewRecipe extends AppCompatActivity {
         ratingBar = findViewById(R.id.RecipeRatingBar);
         deletebtn = findViewById(R.id.RecipeDeleteBtn);
 
-        ratingBar.setRating(5);
+        populateData();
         setupRatingBar();
+
+        deletebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteRecipe();
+            }
+        });
+    }
+
+    public void populateData() {
+        recipe_id = getIntent().getIntExtra("recipe_id", 0);
+        recipe_title = getIntent().getStringExtra("recipe_title");
+        recipe_instruction = getIntent().getStringExtra("recipe_instruction");
+        recipe_rating = getIntent().getIntExtra("recipe_rating", 0);
+
+        recipeTitle.setText(recipe_title);
+        recipeInstruction.setText(recipe_instruction);
+        ratingBar.setRating(recipe_rating);
     }
 
     public void setupRatingBar() {
@@ -36,5 +58,16 @@ public class ViewRecipe extends AppCompatActivity {
                 System.out.println(String.valueOf(rating));
             }
         });
+    }
+
+    public void deleteRecipe() {
+        MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+        Boolean deletedRow = dbHandler.deleteRecipe(recipe_id);
+
+        if(deletedRow) {
+            System.out.println("Recipe deleted");
+        } else {
+            System.out.println("Recipe Not deleted");
+        }
     }
 }

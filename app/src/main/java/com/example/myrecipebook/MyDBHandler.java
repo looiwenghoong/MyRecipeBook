@@ -74,9 +74,9 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return recipe;
     }
 
-    public boolean deleteRecipe(String recipeTitle) {
+    public boolean deleteRecipe(int id) {
         boolean result = false;
-        String query = "recipe_title = \"" + recipeTitle + "\"";
+        String query = "_id = \"" + id + "\"";
         int rowsDeleted = myCR.delete(MyContentProvider.Content_URI, query, null);
         if(rowsDeleted > 0) {
             result = true;
