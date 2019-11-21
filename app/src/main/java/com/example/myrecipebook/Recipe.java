@@ -6,13 +6,13 @@ public class Recipe {
     private String _recipeTitle;
     private String _recipeInstruction;
 
-    private int _recipeRating;
+    private Float _recipeRating;
 
     public Recipe() {
 
     }
 
-    public Recipe(int id, String title, String instruction, int rating) {
+    public Recipe(int id, String title, String instruction, Float rating) {
         this._id = id;
         this._recipeTitle = title;
         this._recipeInstruction = instruction;
@@ -48,11 +48,11 @@ public class Recipe {
         this._recipeInstruction = _recipeInstruction;
     }
 
-    public int get_recipeRating() {
+    public Float get_recipeRating() {
         return _recipeRating;
     }
 
-    public void set_recipeRating(int _recipeRating) {
+    public void set_recipeRating(Float _recipeRating) {
         this._recipeRating = _recipeRating;
     }
 

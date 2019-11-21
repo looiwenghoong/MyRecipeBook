@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                                 int _id = allRecipe.get(position).get_id();
                                 String _recipeTitle = allRecipe.get(position).get_recipeTitle();
                                 String _recipeInstruction = allRecipe.get(position).get_recipeInstruction();
-                                int _recipeRating = allRecipe.get(position).get_recipeRating();
+                                Float _recipeRating = allRecipe.get(position).get_recipeRating();
 
                                 navigateToViewRecipe(_id, _recipeTitle, _recipeInstruction, _recipeRating);
                             }
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         return recipe;
     }
 
-    private void navigateToViewRecipe(int id, String title, String instruction, int rating) {
+    private void navigateToViewRecipe(int id, String title, String instruction, Float rating) {
         Intent viewRecipeIntent = new Intent(this, ViewRecipe.class);
         viewRecipeIntent.putExtra("recipe_id", id);
         viewRecipeIntent.putExtra("recipe_title", title);

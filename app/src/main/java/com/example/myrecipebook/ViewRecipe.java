@@ -16,7 +16,8 @@ public class ViewRecipe extends AppCompatActivity {
     private EditText recipeInstruction;
     private RatingBar ratingBar;
     private Button deletebtn;
-    private int recipe_id, recipe_rating;
+    private int recipe_id;
+    private Float recipe_rating;
     private String recipe_title, recipe_instruction;
 
     @Override
@@ -44,7 +45,7 @@ public class ViewRecipe extends AppCompatActivity {
         recipe_id = getIntent().getIntExtra("recipe_id", 0);
         recipe_title = getIntent().getStringExtra("recipe_title");
         recipe_instruction = getIntent().getStringExtra("recipe_instruction");
-        recipe_rating = getIntent().getIntExtra("recipe_rating", 0);
+        recipe_rating = getIntent().getFloatExtra("recipe_rating", 0);
 
         recipeTitle.setText(recipe_title);
         recipeInstruction.setText(recipe_instruction);
@@ -52,10 +53,11 @@ public class ViewRecipe extends AppCompatActivity {
     }
 
     public void setupRatingBar() {
+        final MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                System.out.println(String.valueOf(rating));
+                dbHandler.updateRating(recipe_id, rating);
             }
         });
     }

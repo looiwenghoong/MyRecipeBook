@@ -96,6 +96,7 @@ public class MyContentProvider extends ContentProvider {
         int uriType = sUriMatcher.match(uri);
         switch (uriType) {
             case RECIPE_ID:
+                System.out.println("query in recipe id");
                 queryBuilder.appendWhere(MyDBHandler.COLUMN_ID + "="
                     + uri.getLastPathSegment());
                 break;

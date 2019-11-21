@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 
 import androidx.annotation.Nullable;
 
@@ -18,7 +19,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private ContentResolver myCR;
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "recipedb.db";
+    private static final String DATABASE_NAME = "recipeDb.db";
     public static final String TABLE_RECIPES = "Recipes";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_RECIPE_TITLE = "recipe_title";
@@ -35,7 +36,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_RECIPE_TABLE = "CREATE TABLE " + TABLE_RECIPES + "(" + COLUMN_ID + " INTEGER PRIMARY KEY,"
-                + COLUMN_RECIPE_TITLE + " TEXT," + COLUMN_RECIPE_INSTRUCTION + " TEXT," + COLUMN_RECIPE_RATING + " INTEGER" + ") ";
+                + COLUMN_RECIPE_TITLE + " TEXT," + COLUMN_RECIPE_INSTRUCTION + " TEXT," + COLUMN_RECIPE_RATING + " FLOAT" + ") ";
         System.out.println(CREATE_RECIPE_TABLE);
         db.execSQL(CREATE_RECIPE_TABLE);
     }
@@ -84,15 +85,16 @@ public class MyDBHandler extends SQLiteOpenHelper {
         return result;
     }
 
-    public void updateRating(int id, int ratingValue) {
+    public void updateRating(int id, float ratingValue) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_RECIPE_RATING, ratingValue);
-        myCR.update(MyContentProvider.Content_URI, values, null, null);
+        Uri updateURI = Uri.parse("content://com.example.myrecipebook.MyContentProvider/Recipes/" + "/" + id);
+        myCR.update(updateURI, values, null, null);
     }
 
     public ArrayList<Recipe> allRecipe(String recipeTitle) {
         allRecipe = new ArrayList<Recipe>();
-        String[] projection = {COLUMN_ID, COLUMN_RECIPE_TITLE, COLUMN_RECIPE_INSTRUCTION};
+        String[] projection = {COLUMN_ID, COLUMN_RECIPE_TITLE, COLUMN_RECIPE_INSTRUCTION, COLUMN_RECIPE_RATING};
 
         Cursor cursor = myCR.query(MyContentProvider.Content_URI, projection, null, null, "recipe_title ASC");
         if(cursor != null) {
@@ -101,6 +103,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
                 recipe.set_id(Integer.parseInt(cursor.getString(0)));
                 recipe.set_recipeTitle(cursor.getString(1));
                 recipe.set_recipeInstruction(cursor.getString(2));
+                recipe.set_recipeRating(Float.parseFloat(cursor.getString(3)));
                 allRecipe.add(recipe);
             }
             cursor.close();
