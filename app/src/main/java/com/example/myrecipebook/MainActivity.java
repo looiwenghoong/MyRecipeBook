@@ -60,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("Title Pressed");
 
                     // Load data sorted with title
-                    allRecipe = loadData();
+                    // sortType 1 == title
+                    allRecipe = loadData(1);
 
                     // if the data array is not null then set adapter to view the data
                     if(allRecipe != null) {
@@ -84,6 +85,29 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else {
                     System.out.println("Rating Pressed");
+
+                    allRecipe = loadData(2);
+
+                    // if the data array is not null then set adapter to view the data
+                    if(allRecipe != null) {
+                        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), allRecipe);
+                        recipeList.setAdapter(customAdapter);
+                        recipeList.setItemsCanFocus(true);
+
+                        recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                int _id = allRecipe.get(position).get_id();
+                                String _recipeTitle = allRecipe.get(position).get_recipeTitle();
+                                String _recipeInstruction = allRecipe.get(position).get_recipeInstruction();
+                                Float _recipeRating = allRecipe.get(position).get_recipeRating();
+
+                                navigateToViewRecipe(_id, _recipeTitle, _recipeInstruction, _recipeRating);
+                            }
+                        });
+                    } else {
+                        System.out.println("No Match Found");
+                    }
                 }
             }
 
@@ -104,9 +128,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private ArrayList<Recipe> loadData() {
+    private ArrayList<Recipe> loadData(int sortType) {
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
-        ArrayList<Recipe> recipe = dbHandler.allRecipe("Cake");
+        ArrayList<Recipe> recipe = dbHandler.allRecipe(sortType);
         return recipe;
     }
 

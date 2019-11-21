@@ -92,11 +92,16 @@ public class MyDBHandler extends SQLiteOpenHelper {
         myCR.update(updateURI, values, null, null);
     }
 
-    public ArrayList<Recipe> allRecipe(String recipeTitle) {
+    public ArrayList<Recipe> allRecipe(int sortType) {
         allRecipe = new ArrayList<Recipe>();
         String[] projection = {COLUMN_ID, COLUMN_RECIPE_TITLE, COLUMN_RECIPE_INSTRUCTION, COLUMN_RECIPE_RATING};
+        Cursor cursor;
+        if(sortType == 1) {
+            cursor = myCR.query(MyContentProvider.Content_URI, projection, null, null, "recipe_title ASC");
+        } else {
+            cursor = myCR.query(MyContentProvider.Content_URI, projection, null, null, "recipe_rating DESC");
+        }
 
-        Cursor cursor = myCR.query(MyContentProvider.Content_URI, projection, null, null, "recipe_title ASC");
         if(cursor != null) {
             while (cursor.moveToNext()) {
                 Recipe recipe = new Recipe();
