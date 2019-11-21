@@ -35,5 +35,6 @@ public class NewRecipe extends AppCompatActivity {
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
         Recipe recipe = new Recipe(title, instruction);
         dbHandler.addRecipe(recipe);
+        finish();
     }
 }
