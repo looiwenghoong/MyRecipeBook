@@ -93,7 +93,6 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public ArrayList<Recipe> allRecipe(String recipeTitle) {
         allRecipe = new ArrayList<Recipe>();
         String[] projection = {COLUMN_ID, COLUMN_RECIPE_TITLE, COLUMN_RECIPE_INSTRUCTION};
-        System.out.println(MyContentProvider.Content_URI);
 
         Cursor cursor = myCR.query(MyContentProvider.Content_URI, projection, null, null, "recipe_title ASC");
         if(cursor != null) {

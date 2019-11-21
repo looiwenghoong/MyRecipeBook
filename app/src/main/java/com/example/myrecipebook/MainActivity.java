@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -18,22 +19,49 @@ public class MainActivity extends AppCompatActivity {
     private Spinner dropDownSpinner;
     private Button addNewRecipeBtn;
     private Button testBtn;
+    private ListView recipeList;
+    private ArrayList<Recipe> allRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupItems();
+        recipeList = findViewById(R.id.recipeList);
 
-        final Intent RecipeIntent = new Intent(this, ViewRecipe.class);
-        testBtn = findViewById(R.id.testBtn);
-        testBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadData();
-//                startActivity(RecipeIntent);
-            }
-        });
+//        final Intent RecipeIntent = new Intent(this, ViewRecipe.class);
+//        testBtn = findViewById(R.id.testBtn);
+//        testBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                loadData();
+////                startActivity(RecipeIntent);
+//            }
+//        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        allRecipe = loadData();
+        if(allRecipe != null) {
+            CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), allRecipe);
+            recipeList.setAdapter(customAdapter);
+            recipeList.setItemsCanFocus(true);
+
+            System.out.println(recipeList);
+
+            recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    System.out.println("123");
+                }
+            });
+        } else {
+            System.out.println("No Match Found");
+        }
+
     }
 
     private void setupItems() {
@@ -66,15 +94,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void loadData() {
+    private ArrayList<Recipe> loadData() {
         MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
         ArrayList<Recipe> recipe = dbHandler.allRecipe("Cake");
-        if(recipe != null) {
-            for(Recipe r: recipe) {
-                System.out.println(r.get_recipeRating());
-            }
-        } else {
-            System.out.println("No Match Found");
-        }
+        return recipe;
     }
 }
