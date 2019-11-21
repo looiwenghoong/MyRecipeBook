@@ -15,28 +15,19 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String[] dropDown = {"Title", "Rating"};
+    private String[] dropDown = {"Title", "Rating"};
     private Spinner dropDownSpinner;
     private Button addNewRecipeBtn;
     private Button testBtn;
     private ListView recipeList;
     private ArrayList<Recipe> allRecipe;
+    private static int spinnerSelectedPos = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recipeList = findViewById(R.id.recipeList);
-
-//        final Intent RecipeIntent = new Intent(this, ViewRecipe.class);
-//        testBtn = findViewById(R.id.testBtn);
-//        testBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loadData();
-////                startActivity(RecipeIntent);
-//            }
-//        });
     }
 
     @Override
@@ -50,13 +41,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Spinner
         dropDownSpinner = findViewById(R.id.dropDownSpinner);
-        ArrayAdapter<String>adapter = new ArrayAdapter<String>(MainActivity.this, R.layout.support_simple_spinner_dropdown_item, dropDown);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, R.layout.support_simple_spinner_dropdown_item, dropDown);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         dropDownSpinner.setAdapter(adapter);
+        dropDownSpinner.setSelection(spinnerSelectedPos);
         dropDownSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0) {
+                    spinnerSelectedPos = position;
                     System.out.println("Title Pressed");
 
                     // Load data sorted with title
@@ -84,8 +77,11 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("No Match Found");
                     }
                 } else {
+                    spinnerSelectedPos = position;
                     System.out.println("Rating Pressed");
 
+                    // Load data sorted with rating
+                    // sortType 2 == rating
                     allRecipe = loadData(2);
 
                     // if the data array is not null then set adapter to view the data
