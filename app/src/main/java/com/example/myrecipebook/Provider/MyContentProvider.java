@@ -10,6 +10,7 @@ import android.content.UriMatcher;
 import android.text.TextUtils;
 
 import com.example.myrecipebook.MyDBHandler;
+import com.example.myrecipebook.MyDatabaseContract;
 
 public class MyContentProvider extends ContentProvider {
 
@@ -38,16 +39,16 @@ public class MyContentProvider extends ContentProvider {
         int rowsDeleted = 0;
         switch (uriType) {
             case RECIPE:
-                rowsDeleted = sqlDB.delete(MyDBHandler.TABLE_RECIPES, selection,
+                rowsDeleted = sqlDB.delete(MyDatabaseContract.RecipeTable.TABLE_RECIPES, selection,
                     selectionArgs);
                 break;
             case RECIPE_ID:
                 String id = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
-                    rowsDeleted = sqlDB.delete(MyDBHandler.TABLE_RECIPES, MyDBHandler.COLUMN_ID + "=" + id,
+                    rowsDeleted = sqlDB.delete(MyDatabaseContract.RecipeTable.TABLE_RECIPES, MyDatabaseContract.RecipeTable.COLUMN_ID + "=" + id,
                         null);
                 } else {
-                    rowsDeleted = sqlDB.delete(MyDBHandler.TABLE_RECIPES,MyDBHandler.COLUMN_ID + "=" + id + " and " + selection,
+                    rowsDeleted = sqlDB.delete(MyDatabaseContract.RecipeTable.TABLE_RECIPES,MyDatabaseContract.RecipeTable.COLUMN_ID + "=" + id + " and " + selection,
                             selectionArgs);
                 }
                 break;
@@ -72,7 +73,7 @@ public class MyContentProvider extends ContentProvider {
         long id = 0;
         switch (uriType) {
             case RECIPE:
-                id = sqlDB.insert(MyDBHandler.TABLE_RECIPES, null, values);
+                id = sqlDB.insert(MyDatabaseContract.RecipeTable.TABLE_RECIPES, null, values);
                 break;
             default:
             throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -92,12 +93,12 @@ public class MyContentProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(MyDBHandler.TABLE_RECIPES);
+        queryBuilder.setTables(MyDatabaseContract.RecipeTable.TABLE_RECIPES);
         int uriType = sUriMatcher.match(uri);
         switch (uriType) {
             case RECIPE_ID:
                 System.out.println("query in recipe id");
-                queryBuilder.appendWhere(MyDBHandler.COLUMN_ID + "="
+                queryBuilder.appendWhere(MyDatabaseContract.RecipeTable.COLUMN_ID + "="
                     + uri.getLastPathSegment());
                 break;
             case RECIPE:
@@ -121,18 +122,18 @@ public class MyContentProvider extends ContentProvider {
         int rowsUpdated = 0;
         switch (uriType) {
             case RECIPE:
-                rowsUpdated = sqlDB.update(MyDBHandler.TABLE_RECIPES, values,
+                rowsUpdated = sqlDB.update(MyDatabaseContract.RecipeTable.TABLE_RECIPES, values,
                             selection,
                             selectionArgs);
                 break;
             case RECIPE_ID:
                 String id = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
-                    rowsUpdated = sqlDB.update(MyDBHandler.TABLE_RECIPES, values,
-                            MyDBHandler.COLUMN_ID + "=" + id, null);
+                    rowsUpdated = sqlDB.update(MyDatabaseContract.RecipeTable.TABLE_RECIPES, values,
+                            MyDatabaseContract.RecipeTable.COLUMN_ID + "=" + id, null);
                 } else {
-                    rowsUpdated = sqlDB.update(MyDBHandler.TABLE_RECIPES, values,
-                            MyDBHandler.COLUMN_ID + "=" + id + " and "
+                    rowsUpdated = sqlDB.update(MyDatabaseContract.RecipeTable.TABLE_RECIPES, values,
+                            MyDatabaseContract.RecipeTable.COLUMN_ID + "=" + id + " and "
                                     + selection,
                             selectionArgs);
                 }

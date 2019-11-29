@@ -68,6 +68,7 @@ public class ViewRecipe extends AppCompatActivity {
 
         if(deletedRow) {
             System.out.println("Recipe deleted");
+            finish();
         } else {
             System.out.println("Recipe Not deleted");
         }
